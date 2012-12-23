@@ -1,0 +1,5 @@
+Todo list for two player snake game.
+
+1. Implement game pausing and resuming on 'P' key press
+2. Implement game reseting on 'R' key pressed
+

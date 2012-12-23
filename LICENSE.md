@@ -1,5 +1,5 @@
 Two Player Snake
-Copyright (C) 2011 Nikoloz Tsimakuridze
+Copyright (C) 2012 Nikoloz Tsimakuridze
 All Rights Reserved.
 
 Permission to use, copy, modify and distribute this software and its

@@ -12,8 +12,12 @@ const fruit = 6;
 const W=80;
 const H=50;
 const T=30;
+const First_T = 750;
+
 const Max_Fruits = 1;
 const Fruit_Delay = 2;
+const Length_Per_Food = 6;
+
 const snake_colours = ["#3333ff","#ffee00","#ff22aa","#331144","#00ee00"];
 // colours: empty, snake1, snake2, wall, fruit
 const level_walls = [
@@ -22,7 +26,7 @@ const level_walls = [
 	"4000050 4790050 3000080 3004980 0",
 	"4400050 3002580 0",
 	"4044921 4204921 4364921 4524921 4684921 4123021 4283021 4443021 4603021 4763021 0",
-	"3000560 3201560 3002560 3203560 3004560 4000050 4780050 0"
+	"3000560 3201560 3002560 3203560 3004560 4000050 4790050 0"
 ];
 
 var board = new Array(W*H);
@@ -74,8 +78,8 @@ function snake(x,y,dir,length,col)
 {
   this.ex = x;
   this.ey = y;
-  this.g = 0;
-  this.c = col;
+  this.g = 0; // how much more the snake needs to grow (increases with food eaten, decreases when growing)
+  this.c = col; // snake color
   this.moved = true;
   this.sx = x + (length-1)*x_shift(dir)
   this.sy = y + (length-1)*y_shift(dir)
@@ -114,8 +118,7 @@ snake.prototype.frontmove = function()
   switch(targ_type)
   {
     case fruit:
-      this.g*=1;
-      this.g+=6;
+      this.g += Length_Per_Food;
       fruit_cnt--;
       scores[this.c]++;
     case empty:
@@ -230,6 +233,7 @@ function makewalls(level_ind)
 
 function new_game()
 {
+  // clean up board
   var cc_x,cc_y;
   for (cc_y=0; cc_y<H; cc_y++)
     for (cc_x=0; cc_x<W; cc_x++)
@@ -238,19 +242,22 @@ function new_game()
       document.getElementById("grid").childNodes[W*cc_y+cc_x].setAttributeNS(null,"fill",snake_colours[0]);
     }
 
-  makewalls(Math.floor(Math.random()*5));
+  makewalls(Math.floor(Math.random()*level_walls.length));
 
   snake1 = new snake(14,8,down,2,1);
   snake2 = new snake(W-14,H-8,up,2,2);
 
+  // randomize the starting player (also randomizes player dying in heads on collision)
   move_cnt = Math.floor(Math.random()*2);
+  
   fruit_cnt = 0;
 
-  setTimeout("move();",750);
+  setTimeout("move();",First_T);
 }
 
 function init()
 {
+  // setup game board
   document.getElementById("background").childNodes[0].setAttributeNS(null,"fill",snake_colours[0]);
   var cc_x,cc_y;
   for (cc_y=0; cc_y<H; cc_y++)

@@ -1,5 +1,5 @@
-var svgNS = "http://www.w3.org/2000/svg";
-var xlinkNS = "http://www.w3.org/1999/xlink";
+const svgNS = "http://www.w3.org/2000/svg";
+const xlinkNS = "http://www.w3.org/1999/xlink";
 
 const empty = 0;
 const wall = 1;
@@ -20,6 +20,7 @@ const Length_Per_Food = 6;
 
 const snake_colours = ["#3333ff","#ffee00","#ff22aa","#331144","#00ee00"];
 // colours: empty, snake1, snake2, wall, fruit
+
 const level_walls = [
 
 	"0",
@@ -28,6 +29,14 @@ const level_walls = [
 	"4044921 4204921 4364921 4524921 4684921 4123021 4283021 4443021 4603021 4763021 0",
 	"3000560 3201560 3002560 3203560 3004560 4000050 4790050 0"
 ];
+/* level description instructions
+
+X(first digit) - wall direction (0 means no more walls in this level)
+XX(second and third digits) starting x coordinate
+XX(fourth and fifth digits) starting y coordinate
+XX(sixth and seventh digits) length of the wall
+
+*/
 
 var board = new Array(W*H);
 var move_cnt = 0;
@@ -48,10 +57,8 @@ function createRect(c_x,c_y,col)
   document.getElementById("grid").appendChild(newRect);
 }
 
-function x_shift(dir)
-{
-  switch (dir)
-  {
+function x_shift(dir) {
+  switch (dir) {
     case right:
       return 1;
     case left:
@@ -61,10 +68,8 @@ function x_shift(dir)
   }
 }
 
-function y_shift(dir)
-{
-  switch (dir)
-  {
+function y_shift(dir) {
+  switch (dir) {
     case down:
       return 1;
     case up:
@@ -73,6 +78,32 @@ function y_shift(dir)
       return 0;
   }
 }
+
+function GameState()
+{
+  this.paused = true;
+  this.resume = function() {
+    this.paused = false;
+    this.scheduleMove();
+  }
+  this.pause = function() {
+    this.paused = true;
+  }
+  this.togglePause = function() {
+    if (this.paused) {
+      this.resume();
+    } else {
+      this.pause();
+    }
+  }
+  this.scheduleMove = function() {
+    if (!this.paused) {
+      setTimeout('move();',T);
+    }
+  }
+}
+
+var gameState = new GameState();
 
 function snake(x,y,dir,length,col)
 {
@@ -166,12 +197,12 @@ function keyHandler(event)
       if (board[W*snake1.sy+snake1.sx] != left && snake1.moved) { board[W*snake1.sy+snake1.sx] = right; snake1.moved = false; }
       break;
     case 80: /* P */
-      //TODO: pause game
+      gameState.togglePause();
       break;
   }
 }
 
-function dropfruit()
+function dropFruit()
 {
   var f_x;
   var f_y;
@@ -194,22 +225,22 @@ function move()
   if (move_cnt % 2 == 0)
   {
     snake1.tailmove()
-    if (snake1.frontmove() == 1) setTimeout("move();",T);
+    if (snake1.frontmove() == 1) gameState.scheduleMove();
     else new_game();
   }
   else
   {
     snake2.tailmove()
-    if (snake2.frontmove() == 1) setTimeout("move();",T);
+    if (snake2.frontmove() == 1) gameState.scheduleMove();
     else new_game();
   }
 
   move_cnt++;
 
-  if (move_cnt % Fruit_Delay == 0 && fruit_cnt < Max_Fruits) dropfruit();
+  if (move_cnt % Fruit_Delay == 0 && fruit_cnt < Max_Fruits) dropFruit();
 }
 
-function makewalls(level_ind)
+function makeWalls(level_ind)
 {
   var i,j,dir,L,l_cnt,str_ind;
   var wall_string = level_walls[level_ind];
@@ -242,7 +273,7 @@ function new_game()
       document.getElementById("grid").childNodes[W*cc_y+cc_x].setAttributeNS(null,"fill",snake_colours[0]);
     }
 
-  makewalls(Math.floor(Math.random()*level_walls.length));
+  makeWalls(Math.floor(Math.random()*level_walls.length));
 
   snake1 = new snake(14,8,down,2,1);
   snake2 = new snake(W-14,H-8,up,2,2);
@@ -252,7 +283,8 @@ function new_game()
   
   fruit_cnt = 0;
 
-  setTimeout("move();",First_T);
+  gameState.moveMethod = move;
+  setTimeout(gameState.resume(),First_T);
 }
 
 function init()

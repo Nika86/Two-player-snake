@@ -302,5 +302,6 @@ function init()
 
   new_game();
 
+  document.documentElement.focus();
   document.documentElement.addEventListener("keydown",keyHandler,false);
 }

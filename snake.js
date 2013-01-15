@@ -21,6 +21,8 @@ const Length_Per_Food = 6;
 const snake_colours = ["#3333ff","#ffee00","#ff22aa","#331144","#00ee00"];
 // colours: empty, snake1, snake2, wall, fruit
 
+const snake_names = ["","Yellow Snake","Pink Snake"];
+
 const level_walls = [
 
   "0",
@@ -59,6 +61,13 @@ function createRect(c_x,c_y,col)
   newRect.setAttributeNS(null,"stroke-width",0.0);
   newRect.setAttributeNS(null,"fill",col);
   document.getElementById("grid").appendChild(newRect);
+}
+
+function updateScores(playerInd)
+{
+  var oldNode = document.getElementById("snake"+playerInd+"score").childNodes[0];
+  var textNode = document.createTextNode(snake_names[playerInd] + " score: " + scores[playerInd]);
+  document.getElementById("snake"+playerInd+"score").replaceChild(textNode,oldNode);
 }
 
 function x_shift(dir) {
@@ -156,6 +165,7 @@ snake.prototype.frontmove = function()
       this.g += Length_Per_Food;
       fruit_cnt--;
       scores[this.c]++;
+      updateScores(this.c);
     case empty:
       board[W*targ_y+targ_x] = board[W*this.sy+this.sx];
       document.getElementById("grid").childNodes[W*targ_y+targ_x].setAttributeNS(null,"fill",snake_colours[this.c]);
@@ -165,7 +175,8 @@ snake.prototype.frontmove = function()
       return 1;
     default:
       scores[3-this.c]+=5;
-      alert("snake "+this.c+" died\nsnake 1 score:"+scores[1]+"\nsnake 2 score:"+scores[2]);
+      updateScores(3-this.c);
+      alert(snake_names[this.c]+" died\n\n"+snake_names[1]+" score:"+scores[1]+"\n"+snake_names[2]+" score:"+scores[2]);
       return 0;
   }
 }
@@ -288,6 +299,8 @@ function new_game()
   fruit_cnt = 0;
 
   gameState.moveMethod = move;
+  updateScores(1);
+  updateScores(2);
   setTimeout(gameState.resume(),First_T);
 }
 

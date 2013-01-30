@@ -19,6 +19,7 @@ const Fruit_Delay = 2;
 const Length_Per_Food = 6;
 
 const snake_colours = ["#3333ff","#ffee00","#ff22aa","#331144","#00ee00"];
+const snake_colour_opacities = ["0.0","1.0","1.0","1.0","1.0"];
 // colours: empty, snake1, snake2, wall, fruit
 
 const snake_names = ["","Yellow Snake","Pink Snake"];
@@ -49,7 +50,13 @@ var move_cnt = 0;
 var fruit_cnt = 0;
 var scores = [0,0,0];
 
-function createRect(c_x,c_y,col)
+function setRectColour(ind_x,ind_y,col_index)
+{
+  document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill",snake_colours[col_index]);
+  document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill-opacity",snake_colour_opacities[col_index]);
+}
+
+function createRect(c_x,c_y,col,col_opacity)
 {
   board[W*c_y+c_x] = empty;
   if (col == null) col = "#ffffff";
@@ -60,6 +67,7 @@ function createRect(c_x,c_y,col)
   newRect.setAttributeNS(null,"y",10*c_y-0);
   newRect.setAttributeNS(null,"stroke-width",0.0);
   newRect.setAttributeNS(null,"fill",col);
+  newRect.setAttributeNS(null,"fill-opacity",col_opacity);
   document.getElementById("grid").appendChild(newRect);
 }
 
@@ -133,7 +141,7 @@ function snake(x,y,dir,length,col)
     var cur_x = this.ex + i*x_shift(dir);
     var cur_y = this.ey + i*y_shift(dir);
     board[W*cur_y+cur_x] = dir;
-    document.getElementById("grid").childNodes[W*cur_y+cur_x].setAttributeNS(null,"fill",snake_colours[this.c]);
+    setRectColour(cur_x,cur_y,this.c);
   }
 }
 
@@ -148,7 +156,7 @@ snake.prototype.tailmove = function()
     var temp_ex = ((this.ex + x_shift(board[W*this.ey+this.ex])) + W) % W;
     var temp_ey = ((this.ey + y_shift(board[W*this.ey+this.ex])) + H) % H;
     board[W*this.ey+this.ex] = empty;
-    document.getElementById("grid").childNodes[W*this.ey+this.ex].setAttributeNS(null,"fill",snake_colours[0]);
+    setRectColour(this.ex,this.ey,0);
     this.ex = temp_ex;
     this.ey = temp_ey;
   }
@@ -168,7 +176,7 @@ snake.prototype.frontmove = function()
       updateScores(this.c);
     case empty:
       board[W*targ_y+targ_x] = board[W*this.sy+this.sx];
-      document.getElementById("grid").childNodes[W*targ_y+targ_x].setAttributeNS(null,"fill",snake_colours[this.c]);
+      setRectColour(targ_x,targ_y,this.c);
       this.sx = targ_x;
       this.sy = targ_y;
       this.moved = true;
@@ -228,7 +236,7 @@ function dropFruit()
     if (board[W*f_y+f_x] == empty)
     {
       board[W*f_y+f_x] = fruit;
-      document.getElementById("grid").childNodes[W*f_y+f_x].setAttributeNS(null,"fill",snake_colours[4]);
+      setRectColour(f_x,f_y,4);
       fruit_cnt++;
       return 0;
     }
@@ -272,7 +280,7 @@ function makeWalls(level_ind)
       var cur_x = (i + l_cnt*x_shift(dir)) % W;
       var cur_y = (j + l_cnt*y_shift(dir)) % H;
       board[W*cur_y+cur_x] = wall;
-      document.getElementById("grid").childNodes[W*cur_y+cur_x].setAttributeNS(null,"fill",snake_colours[3]);
+      setRectColour(cur_x,cur_y,3);
     }
   }
 }
@@ -285,7 +293,7 @@ function new_game()
     for (cc_x=0; cc_x<W; cc_x++)
     {
       board[W*cc_y+cc_x] = empty;
-      document.getElementById("grid").childNodes[W*cc_y+cc_x].setAttributeNS(null,"fill",snake_colours[0]);
+      setRectColour(cc_x,cc_y,0);
     }
 
   makeWalls(Math.floor(Math.random()*level_walls.length));
@@ -307,11 +315,10 @@ function new_game()
 function init()
 {
   // setup game board
-  document.getElementById("background").childNodes[0].setAttributeNS(null,"fill",snake_colours[0]);
   var cc_x,cc_y;
   for (cc_y=0; cc_y<H; cc_y++)
     for (cc_x=0; cc_x<W; cc_x++)
-      createRect(cc_x,cc_y,snake_colours[0]);
+      createRect(cc_x,cc_y,snake_colours[0],snake_colour_opacities[0]);
 
   new_game();
 

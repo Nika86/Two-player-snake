@@ -49,6 +49,15 @@ var board = new Array(W*H);
 var move_cnt = 0;
 var fruit_cnt = 0;
 var scores = [0,0,0];
+var game_mode = 1;
+var curLevel = 0;
+
+/* game modes
+
+1 - ordered levels
+2 - random levels
+
+*/
 
 function setRectColour(ind_x,ind_y,col_index)
 {
@@ -104,10 +113,12 @@ function GameState()
 {
   this.paused = true;
   this.resume = function() {
+    $('#menu').hide();
     this.paused = false;
     this.scheduleMove();
   }
   this.pause = function() {
+    $('#menu').show();
     this.paused = true;
   }
   this.togglePause = function() {
@@ -220,6 +231,8 @@ function keyHandler(event)
       if (board[W*snake1.sy+snake1.sx] != left && snake1.moved) { board[W*snake1.sy+snake1.sx] = right; snake1.moved = false; }
       break;
     case 80: /* P */
+    case 77: /* M */
+    case 27: /* Esc */
       gameState.togglePause();
       break;
   }
@@ -296,7 +309,17 @@ function new_game()
       setRectColour(cc_x,cc_y,0);
     }
 
-  makeWalls(Math.floor(Math.random()*level_walls.length));
+  switch (game_mode)
+  {
+    case 1: /* Ordered Levels */
+      makeWalls(curLevel);
+      curLevel += 1;
+      curLevel %= level_walls.length;
+    break;
+    case 2: /* Random Levels */
+      makeWalls(Math.floor(Math.random()*level_walls.length));
+    break;
+  }
 
   snake1 = new snake(14,8,down,2,1);
   snake2 = new snake(W-14,H-8,up,2,2);
@@ -323,5 +346,19 @@ function init()
   new_game();
 
   document.documentElement.focus();
+  $('#ordered_button').click(function() {
+    game_mode = 1;
+    curLevel = 0;
+    scores = [0,0,0];
+    new_game();
+  });
+  $('#random_button').click(function() {
+    game_mode = 2;
+    scores = [0,0,0];
+    new_game();
+  });
+  $('#resume_button').click(function() {
+    gameState.resume();
+  });
   document.documentElement.addEventListener("keydown",keyHandler,false);
 }

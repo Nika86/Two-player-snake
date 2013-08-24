@@ -1,13 +1,17 @@
 Todo list for two player snake game.
 
-1. Implement game pausing and resuming on 'P' key press (complete)
+(complete) 1. Implement game pausing and resuming on 'P' key press
+
 2. Implement game reseting on 'R' key pressed
 
 3. Make score board more colorful and with larger fonts
+
 4. Implement game menu on 'M' pressed (new game should be one of the options)
-4.1 Implement User selected level rotation (Fixed level game, Rotating levels, Random levels)
+(complete) 4.1 Implement User selected level rotation (Fixed level game, Rotating levels, Random levels)
 4.2 Implement User selected parameters (Growth points per food, Game speed, Points for kill)
 
 5. Create more levels to choose from
 
 6. Invent & implement new types of food, maybe that last limited amount of time and/or give snake special abilities or just are worth more points
+
+7. Implement customizeable starting positions (snake start positions indicated in level description)

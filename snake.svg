@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="svgstyles.css" type="text/css"?>
 <svg
 	id="Snake_frame"
 	viewBox="0 0 800 500"
@@ -10,6 +11,7 @@
 
 <title>Two Player Snake</title>
 
+<script xlink:href="Libraries/jquery-1.8.3.min.js"></script>
 <script xlink:href="snake.js"></script>
 
 <g id="background">
@@ -17,7 +19,24 @@
 	<rect width="800" height="500" x="0" y="0" stroke-width="0" fill="#3333ff" fill-opacity="0.0"/>
 </g>
 <g id="grid"></g>
+
 <text id="snake1score" x="15" y="20" fill="#ddcc44" fill-opacity="0.5" text-anchor="start" alignment-baseline="middle">Snake 1 score</text>
 <text id="snake2score" x="785" y="480" fill="#ff66aa" fill-opacity="0.5" text-anchor="end" alignment-baseline="middle">Snake 2 score</text>
+
+<g id="menu">
+	<rect class="menu_bg" id="menuBG" width="240" height="200" x="280" y="150"/>
+	<g class="menu_button" id="ordered_button" transform="translate(320,170)">
+		<rect class="button_bg" width="160" height="40"/>
+		<text x="25" y="25" textLength="110">Ordered Levels</text>
+	</g>
+	<g class="menu_button" id="random_button" transform="translate(320,230)">
+		<rect class="button_bg" width="160" height="40"/>
+		<text x="25" y="25" textLength="110">Random Levels</text>
+	</g>
+	<g class="menu_button" id="resume_button" transform="translate(320,290)">
+		<rect class="button_bg" width="160" height="40"/>
+		<text x="30" y="25" textLength="100">Resume Game</text>
+	</g>
+</g>
 
 </svg>

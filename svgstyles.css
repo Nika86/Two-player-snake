@@ -1,0 +1,25 @@
+#menu {
+	opacity: 0.5;
+}
+
+#menu:hover {
+	opacity: 1.0;
+}
+
+.menu_bg {
+	stroke-width: 0;
+	fill: #ffffff;
+}
+
+.menu_button {
+	opacity: 0.75;
+}
+
+.menu_button:hover {
+	opacity: 1.0;
+}
+
+.button_bg {
+	stroke-width: 0;
+	fill: #808080;
+}

@@ -11,7 +11,6 @@
 
 <title>Two Player Snake</title>
 
-<script xlink:href="Libraries/jquery-1.8.3.min.js"></script>
 <script xlink:href="snake.js"></script>
 
 <g id="background">

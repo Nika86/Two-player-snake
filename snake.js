@@ -72,8 +72,8 @@ function createRect(c_x,c_y,col,col_opacity)
   var newRect = document.createElementNS(svgNS,"rect");
   newRect.setAttributeNS(null,"width",10);
   newRect.setAttributeNS(null,"height",10);
-  newRect.setAttributeNS(null,"x",10*c_x-0);
-  newRect.setAttributeNS(null,"y",10*c_y-0);
+  newRect.setAttributeNS(null,"x",10*c_x);
+  newRect.setAttributeNS(null,"y",10*c_y);
   newRect.setAttributeNS(null,"stroke-width",0.0);
   newRect.setAttributeNS(null,"fill",col);
   newRect.setAttributeNS(null,"fill-opacity",col_opacity);
@@ -113,12 +113,12 @@ function GameState()
 {
   this.paused = true;
   this.resume = function() {
-    $('#menu').hide();
+    document.getElementById("menu").style.display="none";
     this.paused = false;
     this.scheduleMove();
   }
   this.pause = function() {
-    $('#menu').show();
+    document.getElementById("menu").style.display="block";
     this.paused = true;
   }
   this.togglePause = function() {
@@ -346,19 +346,19 @@ function init()
   new_game();
 
   document.documentElement.focus();
-  $('#ordered_button').click(function() {
+  document.getElementById("ordered_button").onclick=function() {
     game_mode = 1;
     curLevel = 0;
     scores = [0,0,0];
     new_game();
-  });
-  $('#random_button').click(function() {
+  }
+  document.getElementById("random_button").onclick=function() {
     game_mode = 2;
     scores = [0,0,0];
     new_game();
-  });
-  $('#resume_button').click(function() {
+  }
+  document.getElementById("resume_button").onclick=function() {
     gameState.resume();
-  });
+  }
   document.documentElement.addEventListener("keydown",keyHandler,false);
 }

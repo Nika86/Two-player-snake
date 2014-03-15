@@ -111,6 +111,10 @@ function y_shift(dir) {
 
 function GameState()
 {
+  const maxspeed = 10;
+  const minspeed = -10;
+  this.speed = 0;
+  this.speedFactor = 1.0;
   this.paused = true;
   this.resume = function() {
     document.getElementById("menu").style.display="none";
@@ -128,9 +132,21 @@ function GameState()
       this.pause();
     }
   }
+  this.speedUp = function() {
+    if (this.speed < maxspeed) {
+      this.speed++;
+    }
+    this.speedFactor = Math.pow(10.0,this.speed/10.0);
+  }
+  this.slowDown = function() {
+    if (this.speed > minspeed) {
+      this.speed--;
+    }
+    this.speedFactor = Math.pow(10.0,this.speed/10.0);
+  }
   this.scheduleMove = function() {
     if (!this.paused) {
-      setTimeout('move();',T);
+      setTimeout('move();',T/this.speedFactor);
     }
   }
 }
@@ -234,6 +250,12 @@ function keyHandler(event)
     case 77: /* M */
     case 27: /* Esc */
       gameState.togglePause();
+      break;
+    case 189: /* - */
+      gameState.slowDown();
+      break;
+    case 187: /* + */
+      gameState.speedUp();
       break;
   }
 }

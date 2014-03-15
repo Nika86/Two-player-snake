@@ -87,6 +87,12 @@ function updateScores(playerInd)
   document.getElementById("snake"+playerInd+"score").replaceChild(textNode,oldNode);
 }
 
+function updateSpeedDisplay(newSpeed) {
+  var oldNode = document.getElementById("gamespeed").childNodes[0];
+  var textNode = document.createTextNode("Game speed: " + (newSpeed > 0?"+":"") + newSpeed);
+  document.getElementById("gamespeed").replaceChild(textNode,oldNode);
+}
+
 function x_shift(dir) {
   switch (dir) {
     case right:
@@ -111,8 +117,8 @@ function y_shift(dir) {
 
 function GameState()
 {
-  const maxspeed = 10;
-  const minspeed = -10;
+  const maxspeed = 5;
+  const minspeed = -5;
   this.speed = 0;
   this.speedFactor = 1.0;
   this.paused = true;
@@ -137,12 +143,14 @@ function GameState()
       this.speed++;
     }
     this.speedFactor = Math.pow(10.0,this.speed/10.0);
+    updateSpeedDisplay(this.speed);
   }
   this.slowDown = function() {
     if (this.speed > minspeed) {
       this.speed--;
     }
     this.speedFactor = Math.pow(10.0,this.speed/10.0);
+    updateSpeedDisplay(this.speed);
   }
   this.scheduleMove = function() {
     if (!this.paused) {

@@ -31,18 +31,18 @@
 
 	<g class="menu_button" id="ordered_button" transform="translate(20,20)">
 		<rect class="button_bg" width="160" height="40"/>
-		<text x="25" y="25" textLength="110">Ordered Levels</text>
+		<text x="80" y="25" textLength="120">Ordered Levels</text>
 	</g>
 
 	<g class="menu_button" id="random_button" transform="translate(20,80)">
 		<rect class="button_bg" width="160" height="40"/>
-		<text x="25" y="25" textLength="110">Random Levels</text>
+		<text x="80" y="25" textLength="120">Random Levels</text>
 	</g>
 
 	<g class="menu_button" id="fixed_button" transform="translate(20,140)">
 		<rect class="button_bg" width="160" height="40"/>
-		<text x="20" y="25" textLength="90">Fixed Level:</text>
-		<text id="curlevel" x="120" y="25" textLength="20">2</text>
+		<text x="65" y="25" textLength="90">Fixed Level:</text>
+		<text id="curlevel" x="130" y="25" textLength="20"> 2 </text>
 	</g>
 	<g class="menu_button" id="upLevel_button" transform="translate(200,140)">
 		<rect class="button_bg" width="20" height="20"/>
@@ -55,7 +55,7 @@
 
 	<g class="menu_button" id="resume_button" transform="translate(20,200)">
 		<rect class="button_bg" width="160" height="40"/>
-		<text x="30" y="25" textLength="100">Resume Game</text>
+		<text x="80" y="25" textLength="110">Resume Game</text>
 	</g>
 </g>
 

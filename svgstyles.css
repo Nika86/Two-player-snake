@@ -13,10 +13,12 @@
 
 .menu_button {
 	opacity: 0.75;
+	text-anchor: middle;
 }
 
 .menu_button:hover {
 	opacity: 1.0;
+	text-anchor: middle;
 }
 
 .button_bg {

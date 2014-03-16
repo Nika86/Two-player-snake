@@ -75,7 +75,7 @@ function updateSpeedDisplay(newSpeed) {
 
 function updateCurLevel(level) {
   var oldNode = document.getElementById("curlevel").childNodes[0];
-  var textNode = document.createTextNode((level + 1));
+  var textNode = document.createTextNode(" " + (level + 1) + " ");
   document.getElementById("curlevel").replaceChild(textNode,oldNode);
 }
 

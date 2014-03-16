@@ -11,6 +11,7 @@
 
 <title>Two Player Snake</title>
 
+<script xlink:href="levels.js"></script>
 <script xlink:href="snake.js"></script>
 
 <g id="background">
@@ -19,24 +20,42 @@
 </g>
 <g id="grid"></g>
 
-<text id="snake1score" x="15" y="20" fill="#ddcc44" fill-opacity="0.5" text-anchor="start" alignment-baseline="middle">Snake 1 score</text>
-<text id="snake2score" x="785" y="480" fill="#ff66aa" fill-opacity="0.5" text-anchor="end" alignment-baseline="middle">Snake 2 score</text>
+<g id="gameinfo">
+	<text id="snake1score" x="15" y="20" fill="#ddcc44" fill-opacity="0.5" text-anchor="start" alignment-baseline="middle">Snake 1 score</text>
+	<text id="snake2score" x="785" y="480" fill="#ff66aa" fill-opacity="0.5" text-anchor="end" alignment-baseline="middle">Snake 2 score</text>
+	<text id="gamespeed" x="785" y="20" fill="#ffffff" fill-opacity="0.5" text-anchor="end" alignment-baseline="middle">Game speed: 0</text>
+</g>
 
-<text id="gamespeed" x="785" y="20" fill="#ffffff" fill-opacity="0.5" text-anchor="end" alignment-baseline="middle">Game speed: 0</text>
+<g id="menu" transform="translate(280,120)">
+	<rect class="menu_bg" id="menuBG" width="240" height="260"/>
 
-<g id="menu">
-	<rect class="menu_bg" id="menuBG" width="240" height="200" x="280" y="150"/>
-	<g class="menu_button" id="ordered_button" transform="translate(320,170)">
+	<g class="menu_button" id="ordered_button" transform="translate(20,20)">
 		<rect class="button_bg" width="160" height="40"/>
-		<text x="25" y="25" textLength="110">Ordered Levels</text>
+		<text x="80" y="25" textLength="120">Ordered Levels</text>
 	</g>
-	<g class="menu_button" id="random_button" transform="translate(320,230)">
+
+	<g class="menu_button" id="random_button" transform="translate(20,80)">
 		<rect class="button_bg" width="160" height="40"/>
-		<text x="25" y="25" textLength="110">Random Levels</text>
+		<text x="80" y="25" textLength="120">Random Levels</text>
 	</g>
-	<g class="menu_button" id="resume_button" transform="translate(320,290)">
+
+	<g class="menu_button" id="fixed_button" transform="translate(20,140)">
 		<rect class="button_bg" width="160" height="40"/>
-		<text x="30" y="25" textLength="100">Resume Game</text>
+		<text x="65" y="25" textLength="90">Fixed Level:</text>
+		<text id="curlevel" x="130" y="25" textLength="20"> 2 </text>
+	</g>
+	<g class="menu_button" id="upLevel_button" transform="translate(200,140)">
+		<rect class="button_bg" width="20" height="20"/>
+		<polygon class="button_arrow" points="10,6 16,12 4,12"/>
+	</g>
+	<g class="menu_button" id="downLevel_button" transform="translate(200,160)">
+		<rect class="button_bg" width="20" height="20"/>
+		<polygon class="button_arrow" points="10,14 16,8 4,8"/>
+	</g>
+
+	<g class="menu_button" id="resume_button" transform="translate(20,200)">
+		<rect class="button_bg" width="160" height="40"/>
+		<text x="80" y="25" textLength="110">Resume Game</text>
 	</g>
 </g>
 

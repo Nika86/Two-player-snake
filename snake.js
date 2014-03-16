@@ -24,27 +24,6 @@ const snake_colour_opacities = ["0.0","1.0","1.0","1.0","1.0"];
 
 const snake_names = ["","Yellow Snake","Pink Snake"];
 
-const level_walls = [
-
-  "0",
-	"4000050 4790050 3000080 3004980 0",
-	"4400050 3002580 0",
-	"4044921 4204921 4364921 4524921 4684921 4123021 4283021 4443021 4603021 4763021 0",
-	"3000560 3201360 3002160 3202960 3003760 3204560 4000050 4790050 0",
-  "3180545 3184545 4180737 4620737 3281525 3283525 4281717 4521717 0",
-  "3050560 4050541 5754560 2754541 3151540 4151531 5653540 2653531 3252225 4252214 5552825 2552814 0",
-  "3100561 3104561 3472567 4201521 4601521 4400515 2404515 0",
-  "3000080 4000050 3004980 4790050 2194940 4610040 3190935 5614035 3271627 3273327 4401618 0"
-];
-/* level description instructions
-
-X(first digit) - wall direction (0 means no more walls in this level)
-XX(second and third digits) starting x coordinate
-XX(fourth and fifth digits) starting y coordinate
-XX(sixth and seventh digits) length of the wall
-
-*/
-
 var board = new Array(W*H);
 var move_cnt = 0;
 var fruit_cnt = 0;
@@ -56,6 +35,7 @@ var curLevel = 0;
 
 1 - ordered levels
 2 - random levels
+3 - fixed level
 
 */
 
@@ -91,6 +71,12 @@ function updateSpeedDisplay(newSpeed) {
   var oldNode = document.getElementById("gamespeed").childNodes[0];
   var textNode = document.createTextNode("Game speed: " + (newSpeed > 0?"+":"") + newSpeed);
   document.getElementById("gamespeed").replaceChild(textNode,oldNode);
+}
+
+function updateCurLevel(level) {
+  var oldNode = document.getElementById("curlevel").childNodes[0];
+  var textNode = document.createTextNode(" " + (level + 1) + " ");
+  document.getElementById("curlevel").replaceChild(textNode,oldNode);
 }
 
 function x_shift(dir) {
@@ -257,6 +243,7 @@ function keyHandler(event)
     case 80: /* P */
     case 77: /* M */
     case 27: /* Esc */
+    case 32: /* Space */
       gameState.togglePause();
       break;
     case 189: /* - */
@@ -349,7 +336,11 @@ function new_game()
     case 2: /* Random Levels */
       makeWalls(Math.floor(Math.random()*level_walls.length));
     break;
+    case 3: /* Fixed Level */
+      makeWalls(curLevel);
+    break;
   }
+  updateCurLevel(curLevel);
 
   snake1 = new snake(14,8,down,2,1);
   snake2 = new snake(W-14,H-8,up,2,2);
@@ -376,19 +367,39 @@ function init()
   new_game();
 
   document.documentElement.focus();
-  document.getElementById("ordered_button").onclick=function() {
+
+  document.getElementById("ordered_button").onclick = function() {
     game_mode = 1;
     curLevel = 0;
     scores = [0,0,0];
     new_game();
   }
-  document.getElementById("random_button").onclick=function() {
+
+  document.getElementById("random_button").onclick = function() {
     game_mode = 2;
     scores = [0,0,0];
     new_game();
   }
-  document.getElementById("resume_button").onclick=function() {
+
+  document.getElementById("fixed_button").onclick = function() {
+    game_mode = 3;
+    scores = [0,0,0];
+    new_game();
+  }
+  document.getElementById("upLevel_button").onclick = function() {
+    curLevel += 1;
+    curLevel %= level_walls.length;
+    updateCurLevel(curLevel);
+  }
+  document.getElementById("downLevel_button").onclick = function() {
+    curLevel += level_walls.length - 1;
+    curLevel %= level_walls.length;
+    updateCurLevel(curLevel);
+  }
+
+  document.getElementById("resume_button").onclick = function() {
     gameState.resume();
   }
+
   document.documentElement.addEventListener("keydown",keyHandler,false);
 }

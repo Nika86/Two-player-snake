@@ -11,6 +11,7 @@
 
 <title>Two Player Snake</title>
 
+<script xlink:href="levels.js"></script>
 <script xlink:href="snake.js"></script>
 
 <g id="background">

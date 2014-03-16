@@ -56,6 +56,7 @@ var curLevel = 0;
 
 1 - ordered levels
 2 - random levels
+3 - fixed level
 
 */
 
@@ -91,6 +92,12 @@ function updateSpeedDisplay(newSpeed) {
   var oldNode = document.getElementById("gamespeed").childNodes[0];
   var textNode = document.createTextNode("Game speed: " + (newSpeed > 0?"+":"") + newSpeed);
   document.getElementById("gamespeed").replaceChild(textNode,oldNode);
+}
+
+function updateCurLevel(level) {
+  var oldNode = document.getElementById("curlevel").childNodes[0];
+  var textNode = document.createTextNode((level + 1));
+  document.getElementById("curlevel").replaceChild(textNode,oldNode);
 }
 
 function x_shift(dir) {
@@ -257,6 +264,7 @@ function keyHandler(event)
     case 80: /* P */
     case 77: /* M */
     case 27: /* Esc */
+    case 32: /* Space */
       gameState.togglePause();
       break;
     case 189: /* - */
@@ -349,7 +357,11 @@ function new_game()
     case 2: /* Random Levels */
       makeWalls(Math.floor(Math.random()*level_walls.length));
     break;
+    case 3: /* Fixed Level */
+      makeWalls(curLevel);
+    break;
   }
+  updateCurLevel(curLevel);
 
   snake1 = new snake(14,8,down,2,1);
   snake2 = new snake(W-14,H-8,up,2,2);
@@ -376,19 +388,39 @@ function init()
   new_game();
 
   document.documentElement.focus();
-  document.getElementById("ordered_button").onclick=function() {
+
+  document.getElementById("ordered_button").onclick = function() {
     game_mode = 1;
     curLevel = 0;
     scores = [0,0,0];
     new_game();
   }
-  document.getElementById("random_button").onclick=function() {
+
+  document.getElementById("random_button").onclick = function() {
     game_mode = 2;
     scores = [0,0,0];
     new_game();
   }
-  document.getElementById("resume_button").onclick=function() {
+
+  document.getElementById("fixed_button").onclick = function() {
+    game_mode = 3;
+    scores = [0,0,0];
+    new_game();
+  }
+  document.getElementById("upLevel_button").onclick = function() {
+    curLevel += 1;
+    curLevel %= level_walls.length;
+    updateCurLevel(curLevel);
+  }
+  document.getElementById("downLevel_button").onclick = function() {
+    curLevel += level_walls.length - 1;
+    curLevel %= level_walls.length;
+    updateCurLevel(curLevel);
+  }
+
+  document.getElementById("resume_button").onclick = function() {
     gameState.resume();
   }
+
   document.documentElement.addEventListener("keydown",keyHandler,false);
 }

@@ -1,6 +1,3 @@
-const svgNS = "http://www.w3.org/2000/svg";
-const xlinkNS = "http://www.w3.org/1999/xlink";
-
 const empty = 0;
 const wall = 1;
 const up = 2;
@@ -9,9 +6,9 @@ const down = 4;
 const left = 5;
 const fruit = 6;
 
-const W=80;
-const H=50;
-const T=30;
+const W = 80;
+const H = 50;
+const T = 30;
 const First_T = 1000;
 
 const Max_Fruits = 1;
@@ -19,7 +16,7 @@ const Fruit_Delay = 2;
 const Length_Per_Food = 6;
 
 const snake_colours = ["#3333ff","#ffee00","#ff22aa","#331144","#00ee00"];
-const snake_colour_opacities = ["0.0","1.0","1.0","1.0","1.0"];
+const snake_colour_opacities = ["0.5","1.0","1.0","1.0","1.0"];
 // colours: empty, snake1, snake2, wall, fruit
 
 const snake_names = ["","Yellow Snake","Pink Snake"];
@@ -39,45 +36,50 @@ var curLevel = 0;
 
 */
 
-function setRectColour(ind_x,ind_y,col_index)
+function createEmptyRect(x,y)
 {
-  document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill",snake_colours[col_index]);
-  document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill-opacity",snake_colour_opacities[col_index]);
+  board[W*y + x] = empty;
+  var unit = document.getElementById('boardWrapper').style['width'];
+  unit = parseFloat(unit)/W;
+
+  var newRect = document.createElement('div');
+  newRect.setAttribute('id','cell' + (W*y + x));
+  newRect.setAttribute('class','boardCell');
+
+  newRect.setAttribute('style','background-color: ' + snake_colours[0]);
+  newRect.style['opacity'] = snake_colour_opacities[0];
+  newRect.style['left'] = unit*x;
+  newRect.style['top'] = unit*y;
+  newRect.style['width'] = unit;
+  newRect.style['height'] = unit;
+
+  document.getElementById('gameBoard').appendChild(newRect);
 }
 
-function createRect(c_x,c_y,col,col_opacity)
+function setRectColour(ind_x,ind_y,colourIndex)
 {
-  board[W*c_y+c_x] = empty;
-  if (col == null) col = "#ffffff";
-  var newRect = document.createElementNS(svgNS,"rect");
-  newRect.setAttributeNS(null,"width",10);
-  newRect.setAttributeNS(null,"height",10);
-  newRect.setAttributeNS(null,"x",10*c_x);
-  newRect.setAttributeNS(null,"y",10*c_y);
-  newRect.setAttributeNS(null,"stroke-width",0.0);
-  newRect.setAttributeNS(null,"fill",col);
-  newRect.setAttributeNS(null,"fill-opacity",col_opacity);
-  document.getElementById("grid").appendChild(newRect);
+  // document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill",snake_colours[col_index]);
+  // document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill-opacity",snake_colour_opacities[col_index]);
 }
 
-function updateScores(playerInd)
-{
-  var oldNode = document.getElementById("snake"+playerInd+"score").childNodes[0];
-  var textNode = document.createTextNode(snake_names[playerInd] + " score: " + scores[playerInd]);
-  document.getElementById("snake"+playerInd+"score").replaceChild(textNode,oldNode);
-}
+// function updateScores(playerInd)
+// {
+//   var oldNode = document.getElementById("snake"+playerInd+"score").childNodes[0];
+//   var textNode = document.createTextNode(snake_names[playerInd] + " score: " + scores[playerInd]);
+//   document.getElementById("snake"+playerInd+"score").replaceChild(textNode,oldNode);
+// }
 
-function updateSpeedDisplay(newSpeed) {
-  var oldNode = document.getElementById("gamespeed").childNodes[0];
-  var textNode = document.createTextNode("Game speed: " + (newSpeed > 0?"+":"") + newSpeed);
-  document.getElementById("gamespeed").replaceChild(textNode,oldNode);
-}
+// function updateSpeedDisplay(newSpeed) {
+//   var oldNode = document.getElementById("gamespeed").childNodes[0];
+//   var textNode = document.createTextNode("Game speed: " + (newSpeed > 0?"+":"") + newSpeed);
+//   document.getElementById("gamespeed").replaceChild(textNode,oldNode);
+// }
 
-function updateCurLevel(level) {
-  var oldNode = document.getElementById("curlevel").childNodes[0];
-  var textNode = document.createTextNode(" " + (level + 1) + " ");
-  document.getElementById("curlevel").replaceChild(textNode,oldNode);
-}
+// function updateCurLevel(level) {
+//   var oldNode = document.getElementById("curlevel").childNodes[0];
+//   var textNode = document.createTextNode(" " + (level + 1) + " ");
+//   document.getElementById("curlevel").replaceChild(textNode,oldNode);
+// }
 
 function x_shift(dir) {
   switch (dir) {
@@ -318,12 +320,12 @@ function makeWalls(level_ind)
 function new_game()
 {
   // clean up board
-  var cc_x,cc_y;
-  for (cc_y=0; cc_y<H; cc_y++)
-    for (cc_x=0; cc_x<W; cc_x++)
+  var x,y;
+  for (y = 0; y < H; y++)
+    for (x = 0; x < W; x++)
     {
-      board[W*cc_y+cc_x] = empty;
-      setRectColour(cc_x,cc_y,0);
+      board[W*y+x] = empty;
+      setRectColour(x,y,0);
     }
 
   switch (game_mode)
@@ -359,47 +361,47 @@ function new_game()
 function init()
 {
   // setup game board
-  var cc_x,cc_y;
-  for (cc_y=0; cc_y<H; cc_y++)
-    for (cc_x=0; cc_x<W; cc_x++)
-      createRect(cc_x,cc_y,snake_colours[0],snake_colour_opacities[0]);
+  var x,y;
+  for (y = 0; y < H; y++)
+    for (x = 0; x < W; x++)
+      createEmptyRect(x,y);
 
-  new_game();
+  // new_game();
 
-  document.documentElement.focus();
+  // document.documentElement.focus();
 
-  document.getElementById("ordered_button").onclick = function() {
-    game_mode = 1;
-    curLevel = 0;
-    scores = [0,0,0];
-    new_game();
-  }
+  // document.getElementById("ordered_button").onclick = function() {
+  //   game_mode = 1;
+  //   curLevel = 0;
+  //   scores = [0,0,0];
+  //   new_game();
+  // }
 
-  document.getElementById("random_button").onclick = function() {
-    game_mode = 2;
-    scores = [0,0,0];
-    new_game();
-  }
+  // document.getElementById("random_button").onclick = function() {
+  //   game_mode = 2;
+  //   scores = [0,0,0];
+  //   new_game();
+  // }
 
-  document.getElementById("fixed_button").onclick = function() {
-    game_mode = 3;
-    scores = [0,0,0];
-    new_game();
-  }
-  document.getElementById("upLevel_button").onclick = function() {
-    curLevel += 1;
-    curLevel %= level_walls.length;
-    updateCurLevel(curLevel);
-  }
-  document.getElementById("downLevel_button").onclick = function() {
-    curLevel += level_walls.length - 1;
-    curLevel %= level_walls.length;
-    updateCurLevel(curLevel);
-  }
+  // document.getElementById("fixed_button").onclick = function() {
+  //   game_mode = 3;
+  //   scores = [0,0,0];
+  //   new_game();
+  // }
+  // document.getElementById("upLevel_button").onclick = function() {
+  //   curLevel += 1;
+  //   curLevel %= level_walls.length;
+  //   updateCurLevel(curLevel);
+  // }
+  // document.getElementById("downLevel_button").onclick = function() {
+  //   curLevel += level_walls.length - 1;
+  //   curLevel %= level_walls.length;
+  //   updateCurLevel(curLevel);
+  // }
 
-  document.getElementById("resume_button").onclick = function() {
-    gameState.resume();
-  }
+  // document.getElementById("resume_button").onclick = function() {
+  //   gameState.resume();
+  // }
 
-  document.documentElement.addEventListener("keydown",keyHandler,false);
+  // document.documentElement.addEventListener("keydown",keyHandler,false);
 }

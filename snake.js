@@ -16,7 +16,7 @@ const Fruit_Delay = 2;
 const Length_Per_Food = 6;
 
 const snake_colours = ["#3333ff","#ffee00","#ff22aa","#331144","#00ee00"];
-const snake_colour_opacities = ["0.5","1.0","1.0","1.0","1.0"];
+const snake_colour_opacities = ["0.0","1.0","1.0","1.0","1.0"];
 // colours: empty, snake1, snake2, wall, fruit
 
 const snake_names = ["","Yellow Snake","Pink Snake"];
@@ -46,7 +46,7 @@ function createEmptyRect(x,y)
   newRect.setAttribute('id','cell' + (W*y + x));
   newRect.setAttribute('class','boardCell');
 
-  newRect.setAttribute('style','background-color: ' + snake_colours[0]);
+  newRect.style['backgroundColor'] = snake_colours[0];
   newRect.style['opacity'] = snake_colour_opacities[0];
   newRect.style['left'] = unit*x;
   newRect.style['top'] = unit*y;
@@ -56,30 +56,30 @@ function createEmptyRect(x,y)
   document.getElementById('gameBoard').appendChild(newRect);
 }
 
-function setRectColour(ind_x,ind_y,colourIndex)
+function setRectColour(x,y,colourIndex)
 {
-  // document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill",snake_colours[col_index]);
-  // document.getElementById("grid").childNodes[W*ind_y+ind_x].setAttributeNS(null,"fill-opacity",snake_colour_opacities[col_index]);
+  document.getElementById('gameBoard').childNodes[W*y + x].style['backgroundColor'] = snake_colours[colourIndex];
+  document.getElementById('gameBoard').childNodes[W*y + x].style['opacity'] = snake_colour_opacities[colourIndex];
 }
 
-// function updateScores(playerInd)
-// {
-//   var oldNode = document.getElementById("snake"+playerInd+"score").childNodes[0];
-//   var textNode = document.createTextNode(snake_names[playerInd] + " score: " + scores[playerInd]);
-//   document.getElementById("snake"+playerInd+"score").replaceChild(textNode,oldNode);
-// }
+function updateScores(playerInd)
+{
+  // var oldNode = document.getElementById("snake"+playerInd+"score").childNodes[0];
+  // var textNode = document.createTextNode(snake_names[playerInd] + " score: " + scores[playerInd]);
+  // document.getElementById("snake"+playerInd+"score").replaceChild(textNode,oldNode);
+}
 
-// function updateSpeedDisplay(newSpeed) {
-//   var oldNode = document.getElementById("gamespeed").childNodes[0];
-//   var textNode = document.createTextNode("Game speed: " + (newSpeed > 0?"+":"") + newSpeed);
-//   document.getElementById("gamespeed").replaceChild(textNode,oldNode);
-// }
+function updateSpeedDisplay(newSpeed) {
+  // var oldNode = document.getElementById("gamespeed").childNodes[0];
+  // var textNode = document.createTextNode("Game speed: " + (newSpeed > 0?"+":"") + newSpeed);
+  // document.getElementById("gamespeed").replaceChild(textNode,oldNode);
+}
 
-// function updateCurLevel(level) {
-//   var oldNode = document.getElementById("curlevel").childNodes[0];
-//   var textNode = document.createTextNode(" " + (level + 1) + " ");
-//   document.getElementById("curlevel").replaceChild(textNode,oldNode);
-// }
+function updateCurLevel(level) {
+  // var oldNode = document.getElementById("curlevel").childNodes[0];
+  // var textNode = document.createTextNode(" " + (level + 1) + " ");
+  // document.getElementById("curlevel").replaceChild(textNode,oldNode);
+}
 
 function x_shift(dir) {
   switch (dir) {
@@ -111,12 +111,12 @@ function GameState()
   this.speedFactor = 1.0;
   this.paused = true;
   this.resume = function() {
-    document.getElementById("menu").style.display="none";
+    // document.getElementById("menu").style.display="none";
     this.paused = false;
     this.scheduleMove();
   }
   this.pause = function() {
-    document.getElementById("menu").style.display="block";
+    // document.getElementById("menu").style.display="block";
     this.paused = true;
   }
   this.togglePause = function() {
@@ -214,8 +214,8 @@ snake.prototype.frontmove = function()
 
 function keyHandler(event)
 {
-
-  event.preventDefault();
+  if (event.keyCode in [38,40,37,39,87,83,65,68,80,77,27,32,173,189,61,187])
+    event.preventDefault();
   switch (event.keyCode)
   {
     case 38: /* up */
@@ -248,9 +248,11 @@ function keyHandler(event)
     case 32: /* Space */
       gameState.togglePause();
       break;
+    case 173: /* - char code (for firefox) */
     case 189: /* - */
       gameState.slowDown();
       break;
+    case 61: /* = char code (for firefox) */
     case 187: /* + */
       gameState.speedUp();
       break;
@@ -366,7 +368,7 @@ function init()
     for (x = 0; x < W; x++)
       createEmptyRect(x,y);
 
-  // new_game();
+  new_game();
 
   // document.documentElement.focus();
 
@@ -403,5 +405,5 @@ function init()
   //   gameState.resume();
   // }
 
-  // document.documentElement.addEventListener("keydown",keyHandler,false);
+  document.documentElement.addEventListener("keydown",keyHandler,false);
 }

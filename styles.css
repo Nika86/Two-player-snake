@@ -3,9 +3,9 @@ body {
 }
 
 #boardWrapper {
-	position: relative;
 	margin-left: auto;
 	margin-right: auto;
+	position: relative;
 }
 
 .boardCell {

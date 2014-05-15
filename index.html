@@ -8,16 +8,57 @@
 	<script type="text/javascript" src="levels.js"></script>
 	<script type="text/javascript" src="snake.js"></script>
 
-	<div id='boardWrapper'>
+	<div id="boardWrapper">
 		<script type="text/javascript">
 			document.getElementById('boardWrapper').style['width'] = Math.min(window.innerWidth,window.innerHeight*800/500);
 			document.getElementById('boardWrapper').style['height'] = Math.min(window.innerWidth*500/800,window.innerHeight);
 		</script>
 
-		<div id='background'>
-			<img src="Assets/background_images/desert.png" width="100%" height="100%"/>
+		<div id="background">
+			<img src="Assets/background_images/grass.png" width="100%" height="100%"/>
 		</div>
-		<div id='gameBoard'></div>
+
+		<div id="gameBoard"></div>
+
+		<div id="gameinfo" class="infotext">
+			<span id="snake1score">Snake 1 score</span>
+			<span id="snake2score">Snake 2 score</span>
+			<span id="gamespeed">Game speed: 0</span>
+		</div>
+
+<!-- 		<div id="menu" transform="translate(280,120)">
+			<rect class="menu_bg" id="menuBG" width="240" height="260"/>
+
+			<div class="menu_button" id="ordered_button" transform="translate(20,20)">
+				<rect class="button_bg" width="160" height="40"/>
+				<text x="80" y="25" textLength="120">Ordered Levels</text>
+			</div>
+
+			<div class="menu_button" id="random_button" transform="translate(20,80)">
+				<rect class="button_bg" width="160" height="40"/>
+				<text x="80" y="25" textLength="120">Random Levels</text>
+			</div>
+
+			<div class="menu_button" id="fixed_button" transform="translate(20,140)">
+				<rect class="button_bg" width="160" height="40"/>
+				<text x="65" y="25" textLength="90">Fixed Level:</text>
+				<text id="curlevel" x="130" y="25" textLength="20"> 2 </text>
+			</div>
+			<div class="menu_button" id="upLevel_button" transform="translate(200,140)">
+				<rect class="button_bg" width="20" height="20"/>
+				<polygon class="button_arrow" points="10,6 16,12 4,12"/>
+			</div>
+			<div class="menu_button" id="downLevel_button" transform="translate(200,160)">
+				<rect class="button_bg" width="20" height="20"/>
+				<polygon class="button_arrow" points="10,14 16,8 4,8"/>
+			</div>
+
+			<div class="menu_button" id="resume_button" transform="translate(20,200)">
+				<rect class="button_bg" width="160" height="40"/>
+				<text x="80" y="25" textLength="110">Resume Game</text>
+			</div>
+		</div> -->
+
 	</div>
 </body>
 </html>

@@ -9,5 +9,34 @@ body {
 }
 
 .boardCell {
-	position:absolute;
+	position: absolute;
+}
+
+.infotext {
+	opacity: 0.75;
+	font-size: 24;
+}
+
+#snake1score {
+	left: 24;
+	top: 16;
+	color: #ccbb33;
+
+	position: absolute;
+}
+
+#snake2score {
+	right: 24;
+	bottom: 16;
+	color: #dd66aa;
+
+	position: absolute;
+}
+
+#gamespeed {
+	right: 24;
+	top: 16;
+	color: #eeeeee;
+
+	position: absolute;
 }

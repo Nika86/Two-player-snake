@@ -6,7 +6,7 @@ XX(fourth and fifth digits) starting y coordinate
 XX(sixth and seventh digits) length of the wall
 
 */
-const level_walls = [
+const levelWalls = [
  	"0",
 	"4000050 4790050 3000080 3004980 0",
 	"4400050 3002580 0",

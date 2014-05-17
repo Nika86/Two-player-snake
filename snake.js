@@ -60,10 +60,10 @@ function setRectColour(x,y,colourIndex) {
   document.getElementById('gameBoard').childNodes[W*y + x].style['opacity'] = snake_colour_opacities[colourIndex];
 }
 
-function updateScores(playerInd) {
-  var oldNode = document.getElementById('snake'+playerInd+'score').childNodes[0];
-  var textNode = document.createTextNode(snake_names[playerInd] + ' score: ' + scores[playerInd]);
-  document.getElementById('snake'+playerInd+'score').replaceChild(textNode,oldNode);
+function updateScores(playerIndex) {
+  var oldNode = document.getElementById('snake'+playerIndex+'score').childNodes[0];
+  var textNode = document.createTextNode(snake_names[playerIndex] + ' score: ' + scores[playerIndex]);
+  document.getElementById('snake'+playerIndex+'score').replaceChild(textNode,oldNode);
 }
 
 function updateSpeedDisplay(newSpeed) {
@@ -73,9 +73,9 @@ function updateSpeedDisplay(newSpeed) {
 }
 
 function updateCurLevel(level) {
-  // var oldNode = document.getElementById("curlevel").childNodes[0];
-  // var textNode = document.createTextNode(" " + (level + 1) + " ");
-  // document.getElementById("curlevel").replaceChild(textNode,oldNode);
+  var oldNode = document.getElementById('curlevel').childNodes[0];
+  var textNode = document.createTextNode(' ' + (level + 1) + ' ');
+  document.getElementById('curlevel').replaceChild(textNode,oldNode);
 }
 
 function x_shift(dir) {
@@ -107,12 +107,12 @@ function GameState() {
   this.speedFactor = 1.0;
   this.paused = true;
   this.resume = function() {
-    // document.getElementById("menu").style.display="none";
+    document.getElementById('menu').style.display='none';
     this.paused = false;
     this.scheduleMove();
   }
   this.pause = function() {
-    // document.getElementById("menu").style.display="block";
+    document.getElementById('menu').style.display='block';
     this.paused = true;
   }
   this.togglePause = function() {
@@ -302,7 +302,7 @@ function new_game()
   var x,y;
   for (y = 0; y < H; y++)
     for (x = 0; x < W; x++) {
-      board[W*y+x] = empty;
+      board[W*y + x] = empty;
       setRectColour(x,y,0);
     }
 
@@ -345,38 +345,38 @@ function init()
 
   new_game();
 
-  // document.getElementById("ordered_button").onclick = function() {
-  //   game_mode = 1;
-  //   curLevel = 0;
-  //   scores = [0,0,0];
-  //   new_game();
-  // }
+  document.getElementById('ordered_button').onclick = function() {
+    game_mode = 1;
+    curLevel = 0;
+    scores = [0,0,0];
+    new_game();
+  }
 
-  // document.getElementById("random_button").onclick = function() {
-  //   game_mode = 2;
-  //   scores = [0,0,0];
-  //   new_game();
-  // }
+  document.getElementById('random_button').onclick = function() {
+    game_mode = 2;
+    scores = [0,0,0];
+    new_game();
+  }
 
-  // document.getElementById("fixed_button").onclick = function() {
-  //   game_mode = 3;
-  //   scores = [0,0,0];
-  //   new_game();
-  // }
-  // document.getElementById("upLevel_button").onclick = function() {
-  //   curLevel += 1;
-  //   curLevel %= level_walls.length;
-  //   updateCurLevel(curLevel);
-  // }
-  // document.getElementById("downLevel_button").onclick = function() {
-  //   curLevel += level_walls.length - 1;
-  //   curLevel %= level_walls.length;
-  //   updateCurLevel(curLevel);
-  // }
+  document.getElementById('fixed_button').onclick = function() {
+    game_mode = 3;
+    scores = [0,0,0];
+    new_game();
+  }  
+  document.getElementById('upLevel_button').onclick = function() {
+    curLevel += 1;
+    curLevel %= level_walls.length;
+    updateCurLevel(curLevel);
+  }
+  document.getElementById('downLevel_button').onclick = function() {
+    curLevel += level_walls.length - 1;
+    curLevel %= level_walls.length;
+    updateCurLevel(curLevel);
+  }
 
-  // document.getElementById("resume_button").onclick = function() {
-  //   gameState.resume();
-  // }
+  document.getElementById('resume_button').onclick = function() {
+    gameState.resume();
+  }
 
   document.documentElement.addEventListener('keydown',keyHandler,false);
 }

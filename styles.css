@@ -3,8 +3,7 @@ body {
 }
 
 #boardWrapper {
-	margin-left: auto;
-	margin-right: auto;
+	margin: auto;
 	position: relative;
 }
 
@@ -39,4 +38,69 @@ body {
 	color: #eeeeee;
 
 	position: absolute;
+}
+
+#menuWrapper {
+	top: 15%;
+	width: 100%;
+	height: 50%;
+
+	position: absolute;
+}
+
+#menu {
+	background-color: #ffffff;
+	opacity: 0.5;
+
+	width: 32%;
+	height: 100%;
+	padding: 1.2%;
+	margin: auto;
+}
+
+#menu:hover {
+	opacity: 1.0;
+}
+
+.menu_button {
+	background-color: #808080;
+	opacity: 0.75;
+
+	width: 63%;
+	height: 8%;
+	float: left;
+	padding: 3.5%;
+	margin: 5%;
+
+	font-size: 24;
+	text-align: center;
+}
+
+.menu_button:hover {
+	opacity: 1.0;
+}
+
+.menu_text {
+	letter-spacing: 2.5;
+}
+
+.button_arrow {
+	background-color: #808080;
+	opacity: 0.75;
+
+	width: 10%;
+	height: 7.5%;
+	float: left;
+}
+
+.button_arrow:hover {
+	opacity: 1.0;
+}
+
+#upLevel_button {
+	margin: 5% 5% 0%;
+}
+
+#downLevel_button {
+	margin: 0% 5% 5%;
 }

@@ -15,7 +15,7 @@
 		</script>
 
 		<div id="background">
-			<img src="Assets/background_images/grass.png" width="100%" height="100%"/>
+			<img src="Assets/background_images/background.png" width="100%" height="100%"/>
 		</div>
 
 		<div id="gameBoard"></div>
@@ -26,38 +26,33 @@
 			<span id="gamespeed">Game speed: 0</span>
 		</div>
 
-<!-- 		<div id="menu" transform="translate(280,120)">
-			<rect class="menu_bg" id="menuBG" width="240" height="260"/>
+		<div id="menuWrapper">
+			<div id="menu">
 
-			<div class="menu_button" id="ordered_button" transform="translate(20,20)">
-				<rect class="button_bg" width="160" height="40"/>
-				<text x="80" y="25" textLength="120">Ordered Levels</text>
-			</div>
+				<div id="ordered_button" class="menu_button">
+					<span class="menu_text">Ordered Levels</span>
+				</div>
 
-			<div class="menu_button" id="random_button" transform="translate(20,80)">
-				<rect class="button_bg" width="160" height="40"/>
-				<text x="80" y="25" textLength="120">Random Levels</text>
-			</div>
+				<div id="random_button" class="menu_button">
+					<span class="menu_text">Random Levels</span>
+				</div>
 
-			<div class="menu_button" id="fixed_button" transform="translate(20,140)">
-				<rect class="button_bg" width="160" height="40"/>
-				<text x="65" y="25" textLength="90">Fixed Level:</text>
-				<text id="curlevel" x="130" y="25" textLength="20"> 2 </text>
-			</div>
-			<div class="menu_button" id="upLevel_button" transform="translate(200,140)">
-				<rect class="button_bg" width="20" height="20"/>
-				<polygon class="button_arrow" points="10,6 16,12 4,12"/>
-			</div>
-			<div class="menu_button" id="downLevel_button" transform="translate(200,160)">
-				<rect class="button_bg" width="20" height="20"/>
-				<polygon class="button_arrow" points="10,14 16,8 4,8"/>
-			</div>
+				<div id="fixed_button" class="menu_button">
+					<span class="menu_text">Fixed Level:</span>
+					<span id="curlevel" class="menu_text"> 2 </span>
+				</div>
+				<div id="upLevel_button" class="button_arrow">
+					<img src="Assets/menu_assets/upArrow.png" width="100%" height="100%"/>
+				</div>
+				<div id="downLevel_button" class="button_arrow">
+					<img src="Assets/menu_assets/downArrow.png" width="100%" height="100%"/>
+				</div>
 
-			<div class="menu_button" id="resume_button" transform="translate(20,200)">
-				<rect class="button_bg" width="160" height="40"/>
-				<text x="80" y="25" textLength="110">Resume Game</text>
+				<div id="resume_button" class="menu_button">
+					<span class="menu_text">Resume Game</span>
+				</div>
 			</div>
-		</div> -->
+		</div>
 
 	</div>
 </body>
